@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+outputs/*.xlsx
+outputs/*.csv
+!outputs/.gitkeep
+.env
+*.log
+.claude/
