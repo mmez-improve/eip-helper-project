@@ -79,6 +79,36 @@ history) for internal AI-maturity documentation.
   authoring date (Sessions 1–3), then committed the scaffold from this
   session.
 
+## Session 5 — 2026-08-18
+
+**Tool:** Claude Cowork
+
+- Saved the exact Cowork prompt that successfully pulled the 8/3–8/7/2026
+  calendar data to `prompts/pull_eip_calendar_events.md`. Previously it
+  only existed in chat history — this makes it a versioned, reusable
+  artifact and the reference evidence for "the prompt works" going
+  forward.
+
+## Session 6 — 2026-08-18
+
+**Tool:** Claude Cowork
+
+- User provided 8 reference screenshots (Engage portal: EIP Activity
+  history + 7 pages of the Activity Catalog) showing that EIP reporting
+  is actually done against a ~128-row catalog of specific categorized
+  activities with point values (e.g., "Come Together / Virtual
+  Attendance" = 3 points), not just a generic "EIP" tag.
+- Transcribed the catalog into `data/eip_activity_catalog.csv` (128 rows,
+  17 categories) plus `data/README.md` documenting scope and two data
+  quality issues found in the source screenshots themselves (duplicate
+  point values for near-identical activity names), rather than silently
+  resolving the discrepancy.
+- Verified the CSV parses cleanly (consistent column count across all 128
+  rows) via Python's `csv` module before committing.
+- Scope note: this is reference data only. No matching logic connects
+  calendar events to catalog rows yet — that's a deliberately separate,
+  bigger decision for a future session.
+
 ---
 
 <!-- Add new entries above this line as work continues. -->
