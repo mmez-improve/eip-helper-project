@@ -9,3 +9,5 @@ outputs/*.csv
 .env
 *.log
 .claude/
+.git_broken_stale/
+*.lock.stale*
