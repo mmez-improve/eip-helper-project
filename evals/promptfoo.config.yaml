@@ -1,0 +1,58 @@
+# Evaluation suite for the EIP calendar filtering/reporting pipeline.
+#
+# This does not call an LLM — the pipeline's core logic is deterministic
+# Python (by design, see README). promptfoo here is used as a repeatable,
+# reportable eval harness: it runs the actual filter script against a known
+# fixture and asserts the output is exactly right. Re-running
+# `npx promptfoo eval -c evals/promptfoo.config.yaml` on demand (or in CI)
+# is the "proof it works every run" artifact for AI-maturity evidence.
+#
+# If/when an LLM-driven step is added to this pipeline (e.g. an LLM used to
+# summarize notes or classify ambiguous categories), add it as a second
+# provider here and extend the test cases below.
+
+description: "EIP calendar filter/export pipeline evaluation"
+
+prompts:
+  - "{{input_path}}"
+
+providers:
+  - id: exec:python3 ../scripts/filter_eip_events.py
+    label: eip-filter-script
+
+tests:
+  - vars:
+      input_path: ../fixtures/sample_calendar_export.json
+    assert:
+      - type: contains
+        value: "AI Roundtable"
+      - type: contains
+        value: '"eip_flag": "Yes"'
+      - type: contains
+        value: "Microsoft Discovery Session: Sample Agent Talk"
+      - type: not-contains
+        value: "Region - Huddle\",\n      \"start_time\""
+      - type: javascript
+        value: |
+          const rows = JSON.parse(output);
+          const eipRows = rows.filter(r => r.eip_flag === "Yes");
+          const nonEipRows = rows.filter(r => r.eip_flag === "No");
+          if (rows.length !== 8) {
+            return { pass: false, score: 0, reason: `Expected 8 total events, got ${rows.length}` };
+          }
+          if (eipRows.length !== 4) {
+            return { pass: false, score: 0, reason: `Expected 4 EIP-flagged events, got ${eipRows.length}` };
+          }
+          const eipTitles = eipRows.map(r => r.title).sort();
+          const expected = [
+            "AI Roundtable",
+            "Come Together Virtual Talk",
+            "Microsoft Discovery Session: Sample Agent Talk",
+            "Trust Pod Sample Session",
+          ].sort();
+          const matches = JSON.stringify(eipTitles) === JSON.stringify(expected);
+          return {
+            pass: matches,
+            score: matches ? 1 : 0,
+            reason: matches ? "EIP-flagged set matches expected" : `Mismatch: got ${JSON.stringify(eipTitles)}`,
+          };

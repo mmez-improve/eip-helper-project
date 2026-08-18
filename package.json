@@ -1,0 +1,12 @@
+{
+  "name": "eip-helper-project",
+  "version": "0.1.0",
+  "description": "Evaluation harness for the EIP calendar extraction/reporting pipeline",
+  "private": true,
+  "scripts": {
+    "eval": "promptfoo eval -c evals/promptfoo.config.yaml"
+  },
+  "devDependencies": {
+    "promptfoo": "^0.100.0"
+  }
+}

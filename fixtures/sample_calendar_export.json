@@ -1,0 +1,77 @@
+{
+  "_comment": "Synthetic fixture modeled on the real Microsoft Graph calendar export shape (subject/start/end/categories/organizer/attendees/bodyPreview). Names and addresses below are fictional placeholders, not real Improving personnel, so this file is safe to commit and share.",
+  "events": [
+    {
+      "subject": "Daily Standup Sample Team",
+      "start": { "dateTime": "2026-08-03T15:00:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-03T15:30:00.0000000", "timeZone": "UTC" },
+      "categories": ["Purple category"],
+      "organizer": "sample.user@example.com",
+      "attendees": [],
+      "bodyPreview": "see team calendar"
+    },
+    {
+      "subject": "Region - Huddle",
+      "start": { "dateTime": "2026-08-04T13:30:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-04T14:00:00.0000000", "timeZone": "UTC" },
+      "categories": [],
+      "organizer": "manager.sample@example.com",
+      "attendees": ["a.person@example.com", "b.person@example.com"],
+      "bodyPreview": "Recurring regional huddle meeting."
+    },
+    {
+      "subject": "AI Roundtable",
+      "start": { "dateTime": "2026-08-05T15:30:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-05T16:00:00.0000000", "timeZone": "UTC" },
+      "categories": ["EIP"],
+      "organizer": "host.sample@example.com",
+      "attendees": ["a.person@example.com", "c.person@example.com"],
+      "bodyPreview": "Weekly AI skill-building and discussion event."
+    },
+    {
+      "subject": "Microsoft Discovery Session: Sample Agent Talk",
+      "start": { "dateTime": "2026-08-05T17:00:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-05T18:00:00.0000000", "timeZone": "UTC" },
+      "categories": ["EIP", "Orange category"],
+      "organizer": "sample.user@example.com",
+      "attendees": [],
+      "bodyPreview": "Digital event registration link."
+    },
+    {
+      "subject": "Come Together Virtual Talk",
+      "start": { "dateTime": "2026-08-06T17:00:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-06T18:00:00.0000000", "timeZone": "UTC" },
+      "categories": ["EIP"],
+      "organizer": "speaker.sample@example.com",
+      "attendees": ["all-staff@example.com"],
+      "bodyPreview": "Company-wide virtual talk on purpose and meaning at work."
+    },
+    {
+      "subject": "Trust Pod Sample Session",
+      "start": { "dateTime": "2026-08-06T19:30:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-06T20:00:00.0000000", "timeZone": "UTC" },
+      "categories": ["EIP"],
+      "organizer": "pod.lead@example.com",
+      "attendees": ["a.person@example.com", "d.person@example.com"],
+      "bodyPreview": "Discussion pod on trust foundations. EIP Points: Education/Coaching."
+    },
+    {
+      "subject": "timesheet due!",
+      "start": { "dateTime": "2026-08-07T00:00:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-08T00:00:00.0000000", "timeZone": "UTC" },
+      "categories": [],
+      "organizer": "sample.user@example.com",
+      "attendees": [],
+      "bodyPreview": null
+    },
+    {
+      "subject": "Daily Standup Sample Team",
+      "start": { "dateTime": "2026-08-07T15:00:00.0000000", "timeZone": "UTC" },
+      "end": { "dateTime": "2026-08-07T15:30:00.0000000", "timeZone": "UTC" },
+      "categories": ["Purple category"],
+      "organizer": "sample.user@example.com",
+      "attendees": [],
+      "bodyPreview": "see team calendar"
+    }
+  ]
+}
