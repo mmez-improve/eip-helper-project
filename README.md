@@ -21,6 +21,32 @@ Two-stage pipeline, split across two tools deliberately:
    suite in `evals/`, so correctness can be proven on every run rather than
    assumed.
 
+```mermaid
+flowchart LR
+    subgraph Cowork["Claude Cowork (AI-driven, non-deterministic)"]
+        A["Outlook calendar\n(via Microsoft 365 connector)"] --> B["Run prompts/pull_eip_calendar_events.md"]
+        B --> C["Raw export (JSON)\nfixtures/ or data/"]
+    end
+
+    subgraph Code["Claude Code / this repo (deterministic, versioned)"]
+        D["scripts/filter_eip_events.py\nfilter for EIP category"] --> E["scripts/export_report.py\nbuild xlsx/csv"]
+        E --> F["outputs/EIP_Report.xlsx\n(gitignored)"]
+        G["evals/promptfoo.config.yaml\n+ testcases.yaml"] -.->|asserts correctness\nof filter logic| D
+    end
+
+    C --> D
+
+    H["EIP_Automation_Log.md +\ngit history\n(session-by-session evidence)"]
+    Code -.-> H
+    Cowork -.-> H
+```
+
+The split is deliberate: Cowork owns the fragile, connector-dependent part
+(Graph API auth, pagination, category fields) where an AI agent's judgment
+adds value; this repo owns the deterministic part (filtering, report
+formatting) where correctness needs to be proven by an eval suite rather
+than trusted each run.
+
 ## Layout
 
 ```
