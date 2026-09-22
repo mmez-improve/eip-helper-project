@@ -1,0 +1,51 @@
+# Evaluation suite for the AI-driven event-to-EIP-category matching prompt.
+#
+# Unlike evals/promptfoo.config.yaml (which tests deterministic Python and calls no
+# LLM), this DOES call a real model — that's the point. The matching step is
+# deliberately a prompt, not a script (see prompts/match_event_to_eip_category.md),
+# so this eval is the evidence that the prompt's judgment is actually accurate,
+# not just that code runs. Kept deliberately simple: 14 real, human-confirmed
+# events, one provider, one straightforward pass/fail assertion per test — no
+# rubric grading, no synthetic data, no multi-provider comparison. Extend later
+# only if it's actually needed.
+#
+# Requires ANTHROPIC_API_KEY set in your environment (this repo never stores it).
+# Run with: npm run eval:category-matching
+
+description: "EIP event-to-category matching prompt evaluation"
+
+prompts:
+  - "../prompts/match_event_to_eip_category.prompt.txt"
+
+providers:
+  # Sonnet, per Improving's approved-model policy (Sonnet/Haiku only).
+  - id: anthropic:messages:claude-sonnet-5
+    label: claude-sonnet-5-eip-matcher
+    config:
+      max_tokens: 500
+      temperature: 0
+
+tests: category_matching.testcases.yaml
+
+defaultTest:
+  assert:
+    - type: is-json
+    - type: javascript
+      value: |
+        let result;
+        try {
+          result = JSON.parse(output);
+        } catch (e) {
+          return { pass: false, score: 0, reason: `Output was not valid JSON: ${e.message}` };
+        }
+        const catOk = result.matched_category === context.vars.expected_category;
+        const actOk = result.matched_activity === context.vars.expected_activity;
+        const pass = catOk && actOk;
+        return {
+          pass,
+          score: pass ? 1 : 0,
+          reason: pass
+            ? "Category and activity matched expected"
+            : `Got category="${result.matched_category}", activity="${result.matched_activity}"; ` +
+              `expected category="${context.vars.expected_category}", activity="${context.vars.expected_activity}"`,
+        };

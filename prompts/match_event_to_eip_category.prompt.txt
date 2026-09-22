@@ -1,0 +1,174 @@
+You are matching one Outlook calendar event to the correct EIP (Engage
+Involvement Points) catalog entry so it can be logged correctly.
+
+You will be given:
+1. One calendar event: title, date, description/body text, and its
+   Outlook "Show As" status.
+2. The full EIP catalog: each row is
+   Category | Activity Name | Points | Description
+
+Pick the single best-matching catalog row for this event. Use the
+event's title and description as your primary evidence — many EIP
+activities (e.g. "Come Together", "Trust Pod") are named directly in
+the event title or description.
+
+Rules:
+- If the event clearly matches exactly one catalog row, return it with
+  confidence "high".
+- If it plausibly matches more than one row, or the wording is
+  ambiguous, return your best guess but set confidence to "low" or
+  "medium" and list the other plausible rows in `alternatives`, so a
+  human can confirm rather than have the guess applied silently.
+- If nothing in the catalog reasonably fits, return category
+  "NO_MATCH" and explain why in `reasoning` — do not force a fit.
+- Never guess at "Direct Revenue" categories (billable-hours-based, e.g.
+  "40 Billable Hour Week") from calendar data alone — those depend on
+  payroll records, not calendar attendance, and should always be
+  NO_MATCH from this prompt.
+
+Respond with ONLY a JSON object, no other text, in this exact shape:
+{
+  "matched_category": "<catalog category, or NO_MATCH>",
+  "matched_activity": "<catalog activity name, or null>",
+  "points": <integer, or null>,
+  "confidence": "high" | "medium" | "low",
+  "alternatives": [{"category": "...", "activity": "..."}],
+  "reasoning": "<one or two sentences>"
+}
+
+EIP CATALOG:
+Category | Activity Name | Points | Description
+Industry Participation | Podcast Production | 10 pts | Produced, recorded, and posted a podcast and included the URL in activity report. Improving was mentioned. Record each episode.
+Education/Coaching | Personal Coaching | 3 pts | Participated as coach or recipient in a discussion regarding personal development, strengths, weaknesses, and plans to improve. Should be an organized session/meeting focused on personal development rather than just an impromptu discussion.
+Recruiting | Interview - Phone | 4 pts | Conducted a phone interview. Record each interview
+Certification/Recognition | Scrum.org (PSD) | 10 pts |
+Sales/Marketing Support | Case Study Creation - Interviewee | 15 pts | Participating in the interview and help edit an AI generated case study for Improving
+Sales/Marketing Support | Case Study Creation - Interviewer | 25 pts | Hosting and Facilitating the interview and editing process for Case Study generation for Improving.
+Education/Coaching | ImprovingU Course Preparation | 1 pts | Hours for preparing ImprovingU courses
+Direct Revenue | 40 Billable Hour Week | 5 pts | Hours recorded for payroll indicate "fully billable" for the week. NOT derivable from calendar data.
+Direct Revenue | OVER 40 Billable Hour Week | 1 pts | Worked approved "overtime" during the quarter. NOT derivable from calendar data.
+Industry Contribution/Leadership | Presentation - Improving Talks | 20 pts | You presented on the official Improving Talks weekly presentations
+Improving Cares | Charitable Donation | 1 pts | Donate to a charitable organization (that meets the Generous Advocate guidelines)
+Education/Coaching | Adjunct Instructor | 2 pts | Assisted with presentation of a training class (internal or external) with the intent of becoming capable of presenting the class independently in the future.
+Merger/Acquisition | Letter of Intent/Terms Sheet | 45 pts | Provided a lead that has matured to the point that a Letter of Interest (Terms Sheet) has been submitted.
+Operations Support | Corporate Initiative Meeting | 2 pts | Met with others to further the objectives of an approved and organized corporate initiative.
+Certification/Recognition | Microsoft Certification | 15 pts |
+Recruiting | Referral - NonHire | 10 pts | Referred a candidate that has not yet been hired.
+Education/Coaching | Pig Pen Session | 3 pts |
+Certification/Recognition | Other Certification | 15 pts | Received a certification not specifically listed.
+Account Management | Consulting Contract >$10K and <=$100K | 60 pts | Provided the primary lead that resulted in a new consulting contract or contract extension at an existing client (Medium size).
+Networking | Partner Event | 1 pts | Attended an event sponsored by a client or partner (e.g., Microsoft, scrum.org).
+Account Management | Training Contract | 15 pts | Provided the primary lead that resulted in a Training contract with an existing client.
+Account Management | Consulting Contract >$100K | 90 pts | Provided the primary lead that resulted in a new consulting contract or contract extension at an existing client (Large size).
+Education/Coaching | Client Brown Bag | 2 pts | Presented a brown bag information or training session to an existing or potential client. Improving Sales was in attendance.
+Business Development | Placement Prospect | 6 pts | Provided contact info AND potential for Placement business at a NEW client to the Recruiting/Placement team.
+Education/Coaching | IBP Student Work | 1 pts |
+Industry Contribution/Leadership | Publication - Major | 40 pts | Authored a book or article published in an industry leading publication.
+Industry Participation | Relevant Blog Post | 3 pts | Authored a blog post published in your personal blog, Improving's blog, or other industry related blog.
+Education/Coaching | IBP Meeting | 2 pts |
+Sales/Marketing Support | Proposal - Small | 25 pts | Contributed to creation of a small/simple proposal for new business.
+Certification/Recognition | Scrum.org (PST, Trainer) | 75 pts | Recognized by scrum.org as a Professional Scrum Trainer.
+Industry Participation | Podcast Contribution | 5 pts | Participated in a podcast as facilitator or guest.
+Education/Coaching | Pig Pen Development | 1 pts |
+Merger/Acquisition | Letter of Interest | 30 pts | Provided a lead that has matured to the point that a Letter of Interest has been generated.
+Industry Contribution/Leadership | Open Source or Internal Development | 4 pts | Contributed to an open-source project or an Improving internal project.
+Sales/Marketing Support | Proposal - Large | 50 pts | Contributed to creation of large/complex proposal for new business.
+Improving Path | Active Commitment | 3 pts | Actively worked on a deliberate practice described in documented goals/commitments for professional growth within the month.
+Business Development | Consulting Contract >$10K and <=$100K | 60 pts | Provided the primary lead resulting in the FIRST consulting contract with a NEW client (Medium size).
+Sales/Marketing Support | User Group Referral - Other | 5 pts | Referred a new user group to use Improving as a meeting space (< 20 people).
+Operations Support | Submit Project Inventory | 2 pts | Added a new entry to the Improving project inventory.
+Sales/Marketing Support | User Group Host | 20 pts | Acted as the primary Improving representative for a user group meeting (room setup, greeting, sign-up, etc.).
+Education/Coaching | ImprovingU Key Course Instructor Delivery | 6 pts | Delivered an ImprovingU Key class (KEY = IBP, ELP, PEOP 310, FLC 610, IPC 301, all TRUST courses, all CCAP courses, Delivery Excellence Improving Foundations).
+Education/Coaching | ImprovingU Attendance | 1 pts | Attended an ImprovingU class (regular, non-KEY course). NOTE: a duplicate catalog entry lists this at 2 points; verify current value in the live portal.
+Education/Coaching | ImprovingU Instructor Delivery | 5 pts | Delivered an ImprovingU class (regular, non-KEY course).
+Business Development | Placement Contract | 75 pts | Provided the primary lead resulting in first contract for Placement services with a NEW client.
+Industry Participation | Conference - Vacation Day | 6 pts | Attended a conference on a workday AND took time off to do so.
+Business Development | Training Contract | 30 pts | Provided the primary lead resulting in the FIRST Training contract with a NEW client.
+Sales/Marketing Support | Create News Item | 5 pts |
+Education/Coaching | ImprovingU Key Course Attendance | 2 pts | Attended an ImprovingU KEY class (see KEY course list above).
+Certification/Recognition | SA-CSP Certified Scrum Professional | 10 pts |
+Come Together | In-Person Attendance | 10 pts | Attended a Come Together meeting or event in person.
+Sales/Marketing Support | User Group Referral - Large (20+ people) | 15 pts | Referred a new user group to use Improving as a meeting space (20+ people).
+Account Management | Qualified Contact | 3 pts | Provided contact info to Sales for a new contact with an EXISTING client.
+Certification/Recognition | Scrum.org (PSP) | 25 pts |
+Certification/Recognition | PMI-PMP Project Management Professional | 10 pts |
+Direct Revenue | Billing: 530 hrs/qtr | 10 pts | Payroll-derived quarterly billable hours threshold. NOT derivable from calendar data.
+Industry Contribution/Leadership | Presentation - User Group | 20 pts | Presented to a user group.
+Direct Revenue | W2 Work - zero pay | -1 pts | Payroll-derived. NOT derivable from calendar data.
+Education/Coaching | ImprovingU Key Course Student Work | 1 pts | Spent time working on an ImprovingU KEY class outside of class time.
+Certification/Recognition | SA-CSM Certified Scrum Master | 10 pts |
+Education/Coaching | ImprovingU Planning | 2 pts | Participated in definition of ImprovingU curriculum, program facilitation, or communication.
+Industry Contribution/Leadership | Presentation - Lightning Talk | 10 pts | Presented a short lightning talk at a conference or similar forum.
+Networking | Meeting | 1 pts | Attended a lunch/meeting with recruits or clients, OR a town hall, office retrospective, HR meeting, or other organized Improving meeting.
+Account Management | Participation in Bluesheet Creation | 15 pts | Participated with Sales team in creation/update of a Strategic Account Plan, QBR, or Blue Sheet.
+Sales/Marketing Support | Email Campaign | 1 pts | Participated in an Improving email campaign.
+Industry Participation | Conference - Weekend | 3 pts | Attended a conference on the weekend.
+Networking | Improving Event Planning | 2 pts | Met with others to organize and plan Improving company events.
+Industry Participation | Professional Group Attendance | 3 pts | Attended a user group or professional organization meeting. (NOTE: a similarly-named "User/Professional Group Attendance" entry exists at 1 point — data quality issue, unresolved.)
+Account Management | Consulting/Training/Placement Lead - Prospect | 15 pts | Provided contact info AND potential for new business at an EXISTING client to Sales.
+Account Management | Qualified Consulting Lead | 15 pts | Provided a new lead at an existing client, Sales confirmed potential and entered into CRM.
+Direct Revenue | Required Support - 8pm-6am | 1 pts | Required after-hours client support. NOT derivable from calendar data alone (requires payroll/support-ticket confirmation).
+Certification/Recognition | PMI-ACP Agile Certified Practitioner | 10 pts |
+Account Management | Placement Contract | 30 pts | Provided the primary lead resulting in a contract for Placement services with an EXISTING client.
+Networking | Improving Event Attendance | 1 pts | Attended an Improving sponsored meeting or event (Movie Night, Thirsty Thursday, family outings, etc.).
+Sales/Marketing Support | Create Webpage Content | 2 pts | Created content for the Improving website that was accepted and used.
+Business Development | Qualified Placement Lead | 30 pts | Provided a new lead at a NEW client, Recruiting/Placement confirmed potential.
+Operations Support | Maintain Business Report | 5 pts | Created or updated an Improving business report outside normal job responsibilities.
+Education/Coaching | Present ImprovingU Minicourse | 5 pts |
+Improving Path | Meeting | 1 pts | Meeting between Coach and Employee re: Improving Path program, commitments and actions (intro, check-ins, drop-ins of 15+ min).
+Recruiting | Referral - Hire | 100 pts | Referred a candidate that was hired and started work.
+Business Development | Qualified Consulting Lead | 60 pts | Provided a new lead at a NEW client, Sales confirmed potential, entered into CRM.
+Improving Path | Professional Development Coaching | 3 pts | Meeting between Coach and Employee re: specific goal/commitment guidance or skill coaching (30+ min minimum, focused on a specific skill).
+Come Together | Challenge Participation | 10 pts | Participated in a monthly Come Together Challenge.
+Industry Contribution/Leadership | Board Participation | 20 pts | Participated as a member of a board relevant to Improving's business (max 1 meeting/quarter).
+Business Development | Qualified Contact | 6 pts | Provided contact info to Sales for a new contact with a NEW client.
+Operations Support | Website Development | 1 pts | Contributed to development/content on the Improving website or a supporting system (Engage, CodeLaunch, etc.).
+Certification/Recognition | Scrum.org (PSPO) | 10 pts |
+Industry Contribution/Leadership | Lead User Group | 10 pts | Recognized as the leader of an active user group (scheduling, speakers, agenda, promotion).
+Direct Revenue | Overtime: >530 <=630 | 1 pts | Payroll-derived overtime. NOT derivable from calendar data.
+Business Development | Training Prospect | 6 pts | Provided contact info AND potential for Training business at a NEW client.
+Operations Support | Lead Corporate Initiative | 10 pts | Actively led an approved and organized corporate initiative.
+Education/Coaching | ImprovingU Group Discussion | 1 pts | Participated in group discussion re: an ImprovingU class (30+ min). Includes Trust Pods, book clubs, and other continued discussions related to a class.
+Education/Coaching | ImprovingU Group Discussion Facilitation | 2 pts | Facilitated AND participated in the above group discussion (Trust Pods, book clubs, etc.).
+Direct Revenue | Required Support - Weekend | 1 pts | Required weekend client support. NOT derivable from calendar data alone.
+Account Management | Consulting Contract <=$10K | 10 pts | Provided the primary lead resulting in a new consulting contract at an existing client (Small size).
+Industry Participation | Relevant Social Media Posts | 2 pts | Posted career/Improving-relevant content to public social media, profile/message mentions Improving.
+Industry Participation | Conference - Business Day | 0 pts | Attended a conference on a workday but did NOT take time off (zero points).
+Education/Coaching | Project Review Presentation | 3 pts | Presented an overview of a client or internal project to a group of other Improvers (e.g. Thirsty Thursday).
+Come Together | Virtual Attendance | 3 pts | Attended a Come Together meeting or event virtually.
+Sales/Marketing Support | Support Proposal (estimation) | 12 pts | Contributed insight/estimation support for a proposal for new business.
+Improving Cares | Improving Service (< 4 hours) | 5 pts |
+Merger/Acquisition | Qualified Lead | 15 pts | Provided a new lead for potential merger/acquisition meeting specific criteria (emailed to MALeads@improving.com).
+Education/Coaching | ImprovingU Attendance | 2 pts | DUPLICATE ENTRY: also listed at 1 point elsewhere in the catalog. Data quality issue, unresolved.
+Business Development | Consulting Contract <=$10K | 30 pts | Provided the primary lead resulting in the FIRST consulting contract with a NEW client (Small size).
+(none - system entry, not a real category) | Comment | 0 pts | System utility entry for adding a reviewer comment. Not a real activity — never match to this.
+Industry Contribution/Leadership | Publication - Minor | 20 pts | Authored an article published in a technical journal or recognized online publication/blog (personal/Improving blog posts do not qualify).
+Operations Support | Maintain KPI Report | 5 pts | Created or updated a KPI report outside normal job responsibilities.
+User Experience | Design Candidate | 5 pts | Created and presented a UX design candidate.
+Improving Cares | Improving Service (4 to 8 hours) | 10 pts |
+Business Development | Consulting - Prospect | 12 pts | Provided contact info AND potential for new Consulting business at a NEW client.
+Operations Support | Weekend Support | 1 pts | Supported Improving operations during the weekend.
+Certification/Recognition | Microsoft MVP | 50 pts | Recognized as a Microsoft MVP (applies yearly for each renewal).
+Industry Contribution/Leadership | Presentation - Conference | 60 pts | Presented at a conference session (e.g. AgileDotNet), Improving mentioned in speaker bio.
+Recruiting | Interview - In Person | 8 pts | Conducted a face-to-face interview.
+Improving Cares | Community Service | 1 pts | Participated in a community service event wearing Improving swag, with photos shared to marketing.
+Networking | Improving Event Host | 4 pts | Acted as the host of an Improving sponsored meeting or event.
+Education/Coaching | ImprovingU Remote Facilitation | 3 pts | Facilitated a remote group of students in an ImprovingU session (instructor was in a different city).
+Industry Participation | User/Professional Group Attendance | 1 pts | Attended a user group or professional organization meeting. (See "Professional Group Attendance" data quality note above.)
+Business Development | Consulting Contract >$100K | 150 pts | Provided the primary lead resulting in the FIRST consulting contract with a NEW client (Large size).
+Sales/Marketing Support | Support Sales Meeting | 20 pts | Contributed to an internal Sales meeting or a meeting with Sales and clients.
+Certification/Recognition | Scrum.org (PSM I or II) | 10 pts |
+Operations Support | Project Inventory Update | 1 pts | Updated an entry in the Improving project inventory.
+Industry Contribution/Leadership | Presentation - Major | 120 pts | Presented a keynote at a conference with 300+ attendees, or at a major industry conference.
+Industry Contribution/Leadership | Open Source Development | 2 pts |
+Sales/Marketing Support | Create Produced Collateral | 2 pts |
+Account Management | Azure Partner Admin Link | 15 pts | Established/maintained Microsoft Azure PAL claim with a client during the quarter.
+Other | Miscellaneous | 1 pts | Did something that provided value to Improving but wasn't covered by other activities. Requires thorough explanation.
+Industry Participation | User Group Attendance | 1 pts |
+User Experience | Dribbble Post | 1 pts | Posted a UX design to dribbble.com
+
+EVENT TO MATCH:
+Title: {{event_title}}
+Date: {{event_date}}
+Show As status: {{show_as}}
+Description: {{event_description}}

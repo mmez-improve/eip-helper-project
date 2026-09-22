@@ -4,9 +4,10 @@
   "description": "Evaluation harness for the EIP calendar extraction/reporting pipeline",
   "private": true,
   "scripts": {
-    "eval": "promptfoo eval -c evals/promptfoo.config.yaml"
+    "eval": "promptfoo eval -c evals/promptfoo.config.yaml",
+    "eval:category-matching": "promptfoo eval -c evals/category_matching.config.yaml"
   },
   "devDependencies": {
-    "promptfoo": "^0.100.0"
+    "promptfoo": "^0.123.1"
   }
 }

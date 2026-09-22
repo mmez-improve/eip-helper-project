@@ -1,0 +1,159 @@
+# Ground truth for the event-to-EIP-category matching prompt.
+#
+# All 14 rows are REAL events from data/EIP_Calendar_Export_2026-08-01_to_2026-08-31.csv
+# (August 2026), matched by hand against prompts/match_event_to_eip_category.prompt.txt
+# and confirmed correct by the user on 2026-09-22 (including the two originally
+# low-confidence cases: "Cleveland CT - Mystery Speakeasy" and "Path Shaun-Michael").
+# This is real production data, not a synthetic fixture — that's deliberate, since the
+# point of this eval is to measure the AI matching prompt's actual accuracy, not just
+# exercise code paths.
+#
+# Regenerate/extend this file from a new month's export + the user's confirmation,
+# rather than inventing hypothetical test events.
+
+- vars:
+    event_title: "Ohio AI Roundtable"
+    event_date: "2026-08-05"
+    show_as: "busy"
+    event_description: >-
+      Ohio AI Roundtable (AIR) - Weekly AI Skill Building, Insights & Discussion.
+      Join us for AIR, a weekly in-office event designed to help Improvers level
+      up their AI skills and stay informed on what's happening in the world of AI.
+    expected_category: "Networking"
+    expected_activity: "Improving Event Attendance"
+    expected_points: 1
+
+- vars:
+    event_title: "Microsoft Discovery Session: Build Context-Aware Agents That Drive Real Business Decisions"
+    event_date: "2026-08-05"
+    show_as: "busy"
+    event_description: >-
+      Click here to join the digital event. Links to join are unique to each
+      registrant and should not be forwarded.
+    expected_category: "Networking"
+    expected_activity: "Partner Event"
+    expected_points: 1
+
+- vars:
+    event_title: "What Moves Us? Finding Purpose, Calling, and Meaning at Work, with Cynthia Rodriguez | Come Together English Virtual Talk"
+    event_date: "2026-08-06"
+    show_as: "busy"
+    event_description: >-
+      What keeps us motivated when challenges arise? In this talk, we'll explore
+      the forces that give our work meaning.
+    expected_category: "Come Together"
+    expected_activity: "Virtual Attendance"
+    expected_points: 3
+
+- vars:
+    event_title: "Trust Pod 2026"
+    event_date: "2026-08-06"
+    show_as: "busy"
+    event_description: >-
+      This pod is based on Trust Foundations and Leading at the Speed of Trust by
+      Stephen M. R. Covey. EIP Points: Education/Coaching - ImprovingU Group
+      Discussion (one per trust pod attended).
+    expected_category: "Education/Coaching"
+    expected_activity: "ImprovingU Group Discussion"
+    expected_points: 1
+
+- vars:
+    event_title: "Ohio AI Roundtable"
+    event_date: "2026-08-12"
+    show_as: "busy"
+    event_description: "Ohio AI Roundtable (AIR) - Weekly AI Skill Building, Insights & Discussion."
+    expected_category: "Networking"
+    expected_activity: "Improving Event Attendance"
+    expected_points: 1
+
+- vars:
+    event_title: "Trust Pod 2026"
+    event_date: "2026-08-13"
+    show_as: "busy"
+    event_description: >-
+      This pod is based on Trust Foundations and Leading at the Speed of Trust by
+      Stephen M. R. Covey. EIP Points: Education/Coaching - ImprovingU Group
+      Discussion (one per trust pod attended).
+    expected_category: "Education/Coaching"
+    expected_activity: "ImprovingU Group Discussion"
+    expected_points: 1
+
+- vars:
+    event_title: "From AI Assistants to AI Contributors: Rethinking the Developer Platform"
+    event_date: "2026-08-13"
+    show_as: "busy"
+    event_description: >-
+      We'll meet at the Improving Training Center in Independence. Speaker: Bill
+      Curry, Improving VP of Consulting. Doors open 5:00pm, talk starts 6:15pm,
+      networking until 8pm. (Organizer)
+    expected_category: "Networking"
+    expected_activity: "Improving Event Host"
+    expected_points: 4
+
+- vars:
+    event_title: "Global Townhall"
+    event_date: "2026-08-17"
+    show_as: "busy"
+    event_description: "You're invited to Global Townhall."
+    expected_category: "Networking"
+    expected_activity: "Meeting"
+    expected_points: 1
+
+- vars:
+    event_title: "Cleveland CT - Mystery Speakeasy"
+    event_date: "2026-08-18"
+    show_as: "busy"
+    event_description: "(no description provided)"
+    expected_category: "Come Together"
+    expected_activity: "In-Person Attendance"
+    expected_points: 10
+
+- vars:
+    event_title: "Ohio AI Roundtable"
+    event_date: "2026-08-19"
+    show_as: "busy"
+    event_description: "Ohio AI Roundtable (AIR) - Weekly AI Skill Building, Insights & Discussion."
+    expected_category: "Networking"
+    expected_activity: "Improving Event Attendance"
+    expected_points: 1
+
+- vars:
+    event_title: "Magic: The Art of Lying Honestly, with Harold Pulcher | Come Together English Virtual Talk"
+    event_date: "2026-08-20"
+    show_as: "busy"
+    event_description: >-
+      Magic is not about scamming people. In this lively session, Harold explores
+      what makes magic captivating.
+    expected_category: "Come Together"
+    expected_activity: "Virtual Attendance"
+    expected_points: 3
+
+- vars:
+    event_title: "Path Shaun-Michael"
+    event_date: "2026-08-21"
+    show_as: "busy"
+    event_description: "Discuss goals and such."
+    expected_category: "Improving Path"
+    expected_activity: "Meeting"
+    expected_points: 1
+
+- vars:
+    event_title: "Ohio AI Roundtable"
+    event_date: "2026-08-26"
+    show_as: "busy"
+    event_description: "Ohio AI Roundtable (AIR) - Weekly AI Skill Building, Insights & Discussion."
+    expected_category: "Networking"
+    expected_activity: "Improving Event Attendance"
+    expected_points: 1
+
+- vars:
+    event_title: "The Science of Curiosity: Why We Love Mystery (and How It Boosts Learning), with Esteban Cortes | Come Together English Virtual Talk"
+    event_date: "2026-08-27"
+    show_as: "busy"
+    event_description: >-
+      Have you ever wondered why we can't stop watching a suspenseful thriller?
+      Curiosity is a powerful neurobiological mechanism designed to accelerate
+      learning.
+    expected_category: "Come Together"
+    expected_activity: "Virtual Attendance"
+    expected_points: 3
